@@ -7,11 +7,11 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.COMMAND;
-import frc.robot.commands.CommandAuto;
 import frc.robot.commands.CommandPID;
 import frc.robot.subsystems.DriveSubSystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 
 
@@ -27,6 +27,7 @@ public class RobotContainer {
   public static Joystick RJOY = new Joystick(Constants.RJOY);
   private DriveSubSystem drive = new DriveSubSystem();
   public Command m_autoCommand = null;
+
 
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -49,9 +50,15 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
+
   public Command getAutonomousCommand() {
-    CommandPID m_autoCommand = new CommandPID(drive, 0.35 , 1.0);
-    return m_autoCommand;
+    return new InstantCommand(()-> drive.setVelocity(0.7,0.7),drive)
+    .andThen(new WaitCommand(2),
+    new InstantCommand(() -> System.out.println(drive.getVelocity()),drive),
+    new InstantCommand(()-> drive.setVelocity(0,0), drive));
+    //CommandPID m_autoCommand = new CommandPID(drive, 0.5 , 1.0);
+    //return m_autoCommand;
   }
+
   
 }

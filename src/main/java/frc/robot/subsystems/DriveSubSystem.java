@@ -1,12 +1,14 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.commands.COMMAND;
 
 public class DriveSubSystem extends SubsystemBase{
@@ -42,6 +44,16 @@ public class DriveSubSystem extends SubsystemBase{
         public void periodic() {
         SmartDashboard.putNumber("Left Position", getLeftPosition());
         super.periodic();
+        }
+        public double getVelocity(){
+            double p = Leftm1.getSelectedSensorVelocity();
+            return p*10/Constants.pulse_to_meter;
+        }
+        public void setVelocity(double VL , double VR){
+            Leftm1.set(ControlMode.Velocity , VL*Constants.pulse_to_meter/10.,
+            DemandType.ArbitraryFeedForward ,Constants.Ks*Math.signum(VL) + VL*Constants.Kv);
+            Rightm1.set( ControlMode.Velocity , VR*Constants.pulse_to_meter/10.,
+            DemandType.ArbitraryFeedForward , Constants.Ks*Math.signum(VR) + VR*Constants.Kv);
         }
         
 }
