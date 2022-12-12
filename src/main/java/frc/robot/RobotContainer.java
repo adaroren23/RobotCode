@@ -54,7 +54,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     return new InstantCommand(()-> drive.setVelocity(0.7,0.7),drive)
     .andThen(new WaitCommand(2),
-    new InstantCommand(() -> System.out.println(drive.getVelocity()),drive),
+    new InstantCommand(() -> System.out.println(drive.getLeftVelocity()),drive),
     new InstantCommand(()-> drive.setVelocity(0,0), drive));
     //CommandPID m_autoCommand = new CommandPID(drive, 0.5 , 1.0);
     //return m_autoCommand;

@@ -25,4 +25,5 @@ public final class Constants {
     public static final double pulse_to_meter = 51330;
     public static final double Ks = 0.0358;
     public static final double Kv = 0.224;
+    public static final int GYRO_PORT = 14;
 }

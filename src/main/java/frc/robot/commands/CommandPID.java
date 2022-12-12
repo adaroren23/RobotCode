@@ -11,7 +11,6 @@ public class CommandPID extends CommandBase{
     private double enddist;
     private PIDController pid;
     private double v;
-    private Object math;
     public CommandPID(DriveSubSystem drive, double v, double enddist){
         this.drive = drive;
         this.enddist = enddist;
@@ -35,7 +34,7 @@ public class CommandPID extends CommandBase{
     }
     @Override
     public void end(boolean interrupted) {
-        drive.setPower(0,0);;
+        drive.setVelocity(0,0);
     }
     
 }
